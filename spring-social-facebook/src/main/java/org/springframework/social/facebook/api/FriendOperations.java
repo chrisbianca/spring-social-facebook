@@ -150,4 +150,6 @@ public interface FriendOperations {
 	 */
 	PagedList<UserTaggableFriend> getTaggableFriends();
 	
+	PagedList<UserTaggableFriend> getTaggableFriends(PagingParameters pagedListParameters);
+	
 }

@@ -137,7 +137,7 @@ public class FriendTemplateTest extends AbstractFacebookApiTest {
 	
 	@Test
 	public void getTaggableFriends() throws Exception {
-		mockServer.expect(requestTo(facebook.getBaseGraphApiUrl() + "me/taggable_friends?fields=id%2Cname%2Cpicture%2Cfirst_name%2Clast_name%2Cmiddle_name"))
+		mockServer.expect(requestTo(facebook.getBaseGraphApiUrl() + "me/taggable_friends?fields=id%2Cname%2Cpicture.width%28100%29.height%28100%29%2Cfirst_name%2Clast_name%2Cmiddle_name"))
 			.andExpect(method(GET))
 			.andExpect(header("Authorization", "OAuth someAccessToken"))
 			.andRespond(withSuccess(jsonResource("taggable_friends"), MediaType.APPLICATION_JSON));
