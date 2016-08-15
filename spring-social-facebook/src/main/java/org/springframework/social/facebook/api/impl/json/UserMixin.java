@@ -26,6 +26,7 @@ import org.springframework.social.facebook.api.EducationExperience;
 import org.springframework.social.facebook.api.Experience;
 import org.springframework.social.facebook.api.Location;
 import org.springframework.social.facebook.api.PaymentPricePoints;
+import org.springframework.social.facebook.api.ProfilePictureSource;
 import org.springframework.social.facebook.api.Reference;
 import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.VideoUploadLimits;
@@ -38,6 +39,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
@@ -179,6 +181,10 @@ abstract class UserMixin extends FacebookObjectMixin {
 	@JsonProperty("age_range")
 	@JsonDeserialize(using=AgeRangeDeserializer.class)
 	AgeRange ageRange;
+	
+	@JsonProperty("picture")
+	@JsonDeserialize(using=PictureDeserializer.class)
+	AgeRange picture;
 
 	private static class AgeRangeDeserializer extends JsonDeserializer<AgeRange> {
 		@Override
@@ -189,6 +195,16 @@ abstract class UserMixin extends FacebookObjectMixin {
 			Integer min = minNode != null ? minNode.asInt() : null;
 			Integer max = maxNode != null ? maxNode.asInt() : null;
 			return AgeRange.fromMinMax(min, max);
+		}
+	}
+	
+	private static class PictureDeserializer extends JsonDeserializer<ProfilePictureSource> {
+		@Override
+		public ProfilePictureSource deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.registerModule(new FacebookModule());
+			JsonNode dataNode = (JsonNode) jp.readValueAs(JsonNode.class).get("data");
+			return (ProfilePictureSource) mapper.reader(ProfilePictureSource.class).readValue(dataNode);
 		}
 	}
 }

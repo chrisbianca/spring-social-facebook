@@ -42,7 +42,7 @@ public class FacebookAdapterTest {
 		UserOperations userOperations = Mockito.mock(UserOperations.class);
 		Mockito.when(facebook.userOperations()).thenReturn(userOperations);
 		Mockito.when(facebook.getBaseGraphApiUrl()).thenReturn(GRAPH_API_URL);
-		Mockito.when(userOperations.getUserProfile()).thenReturn(new User("12345678", "Craig Walls", "Craig", "Walls", null, null));
+		Mockito.when(userOperations.getUserProfile()).thenReturn(new User("12345678", "Craig Walls", "Craig", "Walls", null, null, null));
 		UserProfile profile = apiAdapter.fetchUserProfile(facebook);
 		assertEquals("Craig Walls", profile.getName());
 		assertEquals("Craig", profile.getFirstName());
@@ -53,7 +53,7 @@ public class FacebookAdapterTest {
 
 	@Test
 	public void setConnectionValues() throws Exception {
-		User user = new User("12345678", "Craig Walls", "Craig", "Walls", null, null);
+		User user = new User("12345678", "Craig Walls", "Craig", "Walls", null, null, null);
 		Field linkField = user.getClass().getDeclaredField("link");
 		linkField.setAccessible(true);
 		linkField.set(user, "http://www.facebook.com/975041837");

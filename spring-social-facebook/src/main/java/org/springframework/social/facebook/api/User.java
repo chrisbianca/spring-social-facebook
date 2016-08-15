@@ -123,15 +123,18 @@ public class User extends FacebookObject implements Serializable {
 	
 	private VideoUploadLimits videoUploadLimits;
 	
+	private ProfilePictureSource picture;
+	
 	User() {}
 	
-	public User(String id, String name, String firstName, String lastName, String gender, Locale locale) {
+	public User(String id, String name, String firstName, String lastName, String gender, Locale locale, ProfilePictureSource picture) {
 		this.id = id;
 		this.name = name;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
 		this.locale = locale;
+		this.picture = picture;
 	}
 
 	/**
@@ -493,6 +496,10 @@ public class User extends FacebookObject implements Serializable {
 	 */
 	public List<Experience> getSports() {
 		return sports;
+	}
+	
+	public ProfilePictureSource getPicture() {
+		return picture;
 	}
 	
 }
